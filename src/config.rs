@@ -117,17 +117,16 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-// Адрес своего hbbs и его публичный ключ подставляются на этапе сборки
-// из переменных окружения RD_SERVER / RD_KEY (в CI — из секретов репозитория),
-// чтобы не хранить адрес внутренней сети в исходниках.
-// Если переменные не заданы, поведение остаётся как у upstream.
+// Свой hbbs на ef-server. Значения можно переопределить при сборке
+// переменными окружения RD_SERVER / RD_KEY, не правя исходник:
+//   RD_SERVER=rustdesk.example.com RD_KEY=... cargo build --release
 pub const RENDEZVOUS_SERVERS: &[&str] = &[match option_env!("RD_SERVER") {
     Some(s) => s,
-    None => "rs-ny.rustdesk.com",
+    None => "192.168.0.135",
 }];
 pub const RS_PUB_KEY: &str = match option_env!("RD_KEY") {
     Some(s) => s,
-    None => "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=",
+    None => "8IMScMWmgnRYlEFW5qtKjTsMFiGyP9Ua6w8qkEg0GoY=",
 };
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
